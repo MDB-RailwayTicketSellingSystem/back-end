@@ -19,4 +19,5 @@ public class PassengerServiceImpl extends AbstractService<Passenger> implements 
     @Resource
     private PassengerMapper passengerMapper;
 
+
 }

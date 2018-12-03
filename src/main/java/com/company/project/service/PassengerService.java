@@ -8,4 +8,6 @@ import com.company.project.core.Service;
  */
 public interface PassengerService extends Service<Passenger> {
 
+
+
 }

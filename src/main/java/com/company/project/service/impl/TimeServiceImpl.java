@@ -19,4 +19,5 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     @Resource
     private TimeMapper timeMapper;
 
+
 }

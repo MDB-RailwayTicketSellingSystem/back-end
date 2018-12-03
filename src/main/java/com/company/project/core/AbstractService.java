@@ -47,6 +47,9 @@ public abstract class AbstractService<T> implements Service<T> {
     public T findById(Integer id) {
         return mapper.selectByPrimaryKey(id);
     }
+    public T findById(String id) {
+        return mapper.selectByPrimaryKey(id);
+    }
 
     @Override
     public T findBy(String fieldName, Object value) throws TooManyResultsException {

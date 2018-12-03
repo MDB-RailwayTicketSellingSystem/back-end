@@ -41,7 +41,7 @@ public class PassengerController {
     }
 
     @PostMapping("/detail")
-    public Result detail(@RequestParam Integer id) {
+    public Result detail(@RequestParam String id) {
         Passenger passenger = passengerService.findById(id);
         return ResultGenerator.genSuccessResult(passenger);
     }
