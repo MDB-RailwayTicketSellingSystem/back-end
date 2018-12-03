@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.TrainorderMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.model.Trainorder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ORDERID" jdbcType="VARCHAR" property="orderid" />
+    <result column="ACCOUNTID" jdbcType="VARCHAR" property="accountid" />
+    <result column="PASSENGERCARD" jdbcType="VARCHAR" property="passengercard" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="TRAINDATE" jdbcType="TIMESTAMP" property="traindate" />
+    <result column="TRAINNUMBER" jdbcType="VARCHAR" property="trainnumber" />
+    <result column="STARTLOCATION" jdbcType="VARCHAR" property="startlocation" />
+    <result column="ARRIVELOCATION" jdbcType="VARCHAR" property="arrivelocation" />
+    <result column="PRICE" jdbcType="NUMERIC" property="price" />
+    <result column="STATE" jdbcType="NUMERIC" property="state" />
+  </resultMap>
+</mapper>
