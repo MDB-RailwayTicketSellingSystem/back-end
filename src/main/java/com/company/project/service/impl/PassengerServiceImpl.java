@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
-
-
+import java.math.BigDecimal;
 
 
 /**
@@ -23,30 +22,30 @@ public class PassengerServiceImpl extends AbstractService<Passenger> implements 
 
     PassengerMapper passengerMapper;
 
-    @Override
-    public int addUser(String name,String password){
-        Passenger passengernew=new Passenger();
-        passengernew.setName(name);
-        passengernew.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));//密码加密
-       // passengernew.setAccounttype();
-       // passengernew.setEmail();
-       // passengernew.setPhone();
-        passengerMapper.addPassenger(passengernew);
-        return 1;
-
-
-    }
 
     @Override
-    public Passenger findPassengerByName(String name){
+    public Passenger findPassenger(String name,String password,int type){
         Passenger passenger=new Passenger();
-        passenger=passengerMapper.findByName(name);
-        return passenger;
+        passenger.setName(name);
+        passenger.setPassword(password);
+        BigDecimal accounttype=new BigDecimal(type);
+        passenger.setAccounttype(accounttype);
+        Passenger need=passengerMapper.selectOne(passenger);
+
+        return need;
     }
 
     @Override
-    public boolean haveMatchCount(String username,String password){
-        return passengerMapper.getMatchCount(username,password)>0;
+    public boolean haveMatchCount(String username,String password,int type){
+        Passenger passenger=new Passenger();
+        passenger.setName(username);
+        passenger.setPassword(password);
+        BigDecimal accounttype=new BigDecimal(type);
+        passenger.setAccounttype(accounttype);
+        int result=passengerMapper.selectCount(passenger);
+        if(result==0) return false;
+        else return true;
+
     }
 
 

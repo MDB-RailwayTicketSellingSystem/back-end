@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public interface PassengerService extends Service<Passenger> {
 
-    int addUser(String name,String password);
+    Passenger findPassenger(String name,String password,int type);
 
-    Passenger findPassengerByName(String name);
-
-    boolean haveMatchCount(String username,String password);
+    boolean haveMatchCount(String username,String password,int type);
 
 
 

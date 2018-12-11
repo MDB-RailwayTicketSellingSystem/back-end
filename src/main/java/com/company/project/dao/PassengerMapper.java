@@ -9,18 +9,9 @@ import com.company.project.model.Time;
 
 public interface PassengerMapper extends Mapper<Passenger> {
 
-    public String TABLE_NAME = " Passenger ";
-    public String INSERT_FIELDS = " username, password";
+   // Passenger selectOne(Passenger passenger);
 
-  //  @Insert({"insert into ",TABLE_NAME," ( ",INSERT_FILEDS," ) values (#{username}, #{password}"})
-    int addPassenger(Passenger passenger);
-
-    Passenger findByName(String name);
-
-    int getMatchCount(String name,String password);
-
-
-
+  //  int selectCount(Passenger passenger);
 
 
 

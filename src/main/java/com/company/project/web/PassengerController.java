@@ -3,11 +3,13 @@ import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
 import com.company.project.model.Passenger;
 import com.company.project.service.PassengerService;
+import com.company.project.service.impl.PassengerServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -51,22 +53,21 @@ public class PassengerController {
         return ResultGenerator.genSuccessResult(pageInfo);
     }
 
-    @PostMapping("/reg")
-    public  Result register(@RequestParam(value = "username") String username,
-                            @RequestParam(value = "password") String password){
-        int result=passengerServiceImpl.addUser(username,password);
-        if(result==1)return ResultGenerator.genSuccessResult();
-        else
-            return ResultGenerator.genFailResult("注册失败！");
-
-    }
-
+    /*
+    用户登录
+     */
     @GetMapping("/login")
     public Result login(@RequestParam(value = "username") String username,
                         @RequestParam(value = "password")String password){
 
-        boolean isValidUser=passengerServiceImpl.haveMatchCount(username,password);
-        if(!isValidUser)return ResultGenerator.genFailResult("用户名或者密码错误！!");
-        else return ResultGenerator.genSuccessResult();
+        boolean isValidUser=passengerServiceImpl.haveMatchCount(username,password,0);
+        if(!isValidUser)return ResultGenerator.genFailResult("错误！!");
+        else
+        {
+            Passenger passenger=passengerServiceImpl.findPassenger(username,password,0);
+            return ResultGenerator.genSuccessResult(passenger.getAccountid());
+        }
     }
+
+
 }

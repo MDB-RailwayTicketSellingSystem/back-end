@@ -1,6 +1,7 @@
 package com.company.project.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -35,6 +36,9 @@ public class Trainorder {
 
     @Column(name = "STATE")
     private BigDecimal state;
+
+    @Column(name = "ORDERTIME")
+    private LocalDate ordertime;
 
     /**
      * @return ORDERID
@@ -174,5 +178,13 @@ public class Trainorder {
      */
     public void setState(BigDecimal state) {
         this.state = state;
+    }
+
+    public LocalDate getOrdertime() {
+        return ordertime;
+    }
+
+    public void setOrdertime(LocalDate ordertime) {
+        this.ordertime = ordertime;
     }
 }
