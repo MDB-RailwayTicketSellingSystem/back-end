@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 @Transactional
 public class PassengerServiceImpl extends AbstractService<Passenger> implements PassengerService {
 
+    @Resource
     PassengerMapper passengerMapper;
 
 
@@ -28,10 +29,8 @@ public class PassengerServiceImpl extends AbstractService<Passenger> implements 
         Passenger passenger=new Passenger();
         passenger.setName(name);
         passenger.setPassword(password);
-        BigDecimal accounttype=new BigDecimal(type);
-        passenger.setAccounttype(accounttype);
+        passenger.setAccounttype(type);
         Passenger need=passengerMapper.selectOne(passenger);
-
         return need;
     }
 
@@ -40,11 +39,11 @@ public class PassengerServiceImpl extends AbstractService<Passenger> implements 
         Passenger passenger=new Passenger();
         passenger.setName(username);
         passenger.setPassword(password);
-        BigDecimal accounttype=new BigDecimal(type);
-        passenger.setAccounttype(accounttype);
+        passenger.setAccounttype(type);
         int result=passengerMapper.selectCount(passenger);
         if(result==0) return false;
-        else return true;
+        else
+            return true;
 
     }
 

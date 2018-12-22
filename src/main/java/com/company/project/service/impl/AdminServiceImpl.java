@@ -1,6 +1,7 @@
 package com.company.project.service.impl;
 
 import com.company.project.core.AbstractService;
+import com.company.project.dao.PassengerMapper;
 import com.company.project.dao.TrainorderMapper;
 import com.company.project.model.Trainorder;
 import com.company.project.service.AdminService;
@@ -18,18 +19,22 @@ import java.util.*;
 public class AdminServiceImpl extends AbstractService<Trainorder> implements AdminService {
 
     @Resource
-    TrainorderMapper trainorderMapper;
+    private TrainorderMapper trainorderMapper;
+
+    @Resource
+    private PassengerMapper passengerMapper;
 
     /*
     两个日期之间每一天的新增订单数量
      */
     @Override
-    public Map<LocalDate,Object> findbyTime(LocalDate start, LocalDate end, int status) {
+    public Map<LocalDate,Object> findbyTime(LocalDate start, LocalDate end, int status)
+    {
         Map<LocalDate,Object> map=new HashMap<LocalDate, Object>();
         long between=start.until(end, ChronoUnit.DAYS);//相差天数
         int bet=Integer.parseInt(String.valueOf(between));
         for(int i=0;i<bet;i++){
-            LocalDate current=start.plus(i, ChronoUnit.DAYS);
+            LocalDate current=start.plusDays(i);
             Trainorder trainorder=new Trainorder();
             trainorder.setState(new BigDecimal(status));
             trainorder.setOrdertime(current);
@@ -39,4 +44,6 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
         }
         return map;
     }
+
+
 }

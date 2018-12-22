@@ -9,9 +9,6 @@ import com.company.project.model.Time;
 
 public interface PassengerMapper extends Mapper<Passenger> {
 
-   // Passenger selectOne(Passenger passenger);
-
-  //  int selectCount(Passenger passenger);
 
 
 

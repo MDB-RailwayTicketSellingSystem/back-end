@@ -1,14 +1,16 @@
 package com.company.project.model;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.Date;
 import javax.persistence.*;
 
 public class Time {
-    @Id
-    @Column(name = "TRAINID")
-    private String trainid;
 
+  //  @Column(name = "TRAINID")
+  //  private long trainid;
+
+    @Id
     @Column(name = "TRAINNUMBER")
     private String trainnumber;
 
@@ -33,19 +35,8 @@ public class Time {
     @Column(name = "DURATION")
     private Date duration;
 
-    /**
-     * @return TRAINID
-     */
-    public String getTrainid() {
-        return trainid;
-    }
 
-    /**
-     * @param trainid
-     */
-    public void setTrainid(String trainid) {
-        this.trainid = trainid;
-    }
+
 
     /**
      * @return TRAINNUMBER

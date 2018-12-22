@@ -57,7 +57,7 @@ public class PassengerController {
     用户登录
      */
     @GetMapping("/login")
-    public Result login(@RequestParam(value = "username") String username,
+    public Result login(@RequestParam(value = "name") String username,
                         @RequestParam(value = "password")String password){
 
         boolean isValidUser=passengerServiceImpl.haveMatchCount(username,password,0);

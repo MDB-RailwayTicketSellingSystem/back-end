@@ -9,7 +9,7 @@ public class Passenger {
     private String accountid;
 
     @Column(name = "ACCOUNTTYPE")
-    private BigDecimal accounttype;
+    private int accounttype;
 
     @Column(name = "NAME")
     private String name;
@@ -43,14 +43,14 @@ public class Passenger {
     /**
      * @return ACCOUNTTYPE
      */
-    public BigDecimal getAccounttype() {
+    public int getAccounttype() {
         return accounttype;
     }
 
     /**
      * @param accounttype
      */
-    public void setAccounttype(BigDecimal accounttype) {
+    public void setAccounttype(int accounttype) {
         this.accounttype = accounttype;
     }
 
