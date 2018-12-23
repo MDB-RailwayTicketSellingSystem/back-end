@@ -39,6 +39,9 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
             trainorder.setState(new BigDecimal(status));
             trainorder.setOrdertime(current);
             List<Trainorder> trainorders=trainorderMapper.select(trainorder);
+            for(int j=0;j<trainorders.size();j++){
+                System.out.println(trainorders.get(j).getOrderid());
+            }
             map.put(current,trainorders.size());
 
         }

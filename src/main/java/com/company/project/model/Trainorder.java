@@ -20,7 +20,7 @@ public class Trainorder {
     private String name;
 
     @Column(name = "TRAINDATE")
-    private Date traindate;
+    private LocalDate traindate;
 
     @Column(name = "TRAINNUMBER")
     private String trainnumber;
@@ -37,7 +37,7 @@ public class Trainorder {
     @Column(name = "STATE")
     private BigDecimal state;
 
-    @Column(name = "ORDERTIME")
+    @Column(name = "ORDERDATE")
     private LocalDate ordertime;
 
     /**
@@ -99,14 +99,14 @@ public class Trainorder {
     /**
      * @return TRAINDATE
      */
-    public Date getTraindate() {
+    public LocalDate getTraindate() {
         return traindate;
     }
 
     /**
      * @param traindate
      */
-    public void setTraindate(Date traindate) {
+    public void setTraindate(LocalDate traindate) {
         this.traindate = traindate;
     }
 

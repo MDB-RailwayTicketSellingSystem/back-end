@@ -30,7 +30,7 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
         List<Trainorder> orders=trainorderMapper.selectAll();
         List<Trainorder> dayorders=new LinkedList<>();
         for (Trainorder trainorder:orders){
-            if(trainorder.getOrdertime().equals(time)){
+            if(trainorder.getTraindate().equals(time)){
                 dayorders.add(trainorder);
             }
         }
