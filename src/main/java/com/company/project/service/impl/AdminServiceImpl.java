@@ -1,8 +1,8 @@
 package com.company.project.service.impl;
 
 import com.company.project.core.AbstractService;
-import com.company.project.dao.PassengerMapper;
-import com.company.project.dao.TrainorderMapper;
+import com.company.project.dao.PassengerDAO;
+import com.company.project.dao.TrainorderDAO;
 import com.company.project.model.Trainorder;
 import com.company.project.service.AdminService;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,8 @@ import java.util.*;
 public class AdminServiceImpl extends AbstractService<Trainorder> implements AdminService {
 
     @Resource
-    private TrainorderMapper trainorderMapper;
+    private TrainorderDAO trainorderDAO;
 
-    @Resource
-    private PassengerMapper passengerMapper;
 
     /*
     两个日期之间每一天的新增订单数量
@@ -38,10 +36,7 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
             Trainorder trainorder=new Trainorder();
             trainorder.setState(new BigDecimal(status));
             trainorder.setOrdertime(current);
-            List<Trainorder> trainorders=trainorderMapper.select(trainorder);
-            for(int j=0;j<trainorders.size();j++){
-                System.out.println(trainorders.get(j).getOrderid());
-            }
+            List<Trainorder> trainorders= trainorderDAO.select(trainorder);
             map.put(current,trainorders.size());
 
         }

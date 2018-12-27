@@ -6,9 +6,9 @@ import com.company.project.model.Trainorder;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface TrainorderMapper extends Mapper<Trainorder> {
+public interface TrainorderDAO extends Mapper<Trainorder> {
 
-     List<Trainorder> getOrderByTime(LocalDate time);
+     int getOrderByTimeSQL(Trainorder trainorder);//获取某天的订单数量
 
 
 }

@@ -1,16 +1,13 @@
 package com.company.project.service.impl;
 
-import com.company.project.dao.PassengerMapper;
+import com.company.project.dao.PassengerDAO;
 import com.company.project.model.Passenger;
 import com.company.project.service.PassengerService;
 import com.company.project.core.AbstractService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 
 
 /**
@@ -21,7 +18,7 @@ import java.math.BigDecimal;
 public class PassengerServiceImpl extends AbstractService<Passenger> implements PassengerService {
 
     @Resource
-    PassengerMapper passengerMapper;
+    PassengerDAO passengerMapper;
 
 
     @Override

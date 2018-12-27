@@ -1,8 +1,6 @@
 package com.company.project.Service;
 
-import com.company.project.dao.PassengerMapper;
 import com.company.project.model.Passenger;
-import com.company.project.model.Time;
 import com.company.project.service.impl.PassengerServiceImpl;
 import com.company.project.service.impl.TimeServiceImpl;
 import org.junit.Test;

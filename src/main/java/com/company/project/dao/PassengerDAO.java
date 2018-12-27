@@ -7,10 +7,7 @@ import com.company.project.core.Mapper;
 import com.company.project.model.Time;
 
 
-public interface PassengerMapper extends Mapper<Passenger> {
-
-
-
+public interface PassengerDAO extends Mapper<Passenger> {
 
 
 }

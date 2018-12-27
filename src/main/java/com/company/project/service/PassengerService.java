@@ -1,8 +1,6 @@
 package com.company.project.service;
-import com.company.project.dao.PassengerMapper;
 import com.company.project.model.Passenger;
 import com.company.project.core.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**

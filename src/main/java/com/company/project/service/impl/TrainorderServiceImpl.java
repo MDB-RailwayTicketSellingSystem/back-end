@@ -1,6 +1,6 @@
 package com.company.project.service.impl;
 
-import com.company.project.dao.TrainorderMapper;
+import com.company.project.dao.TrainorderDAO;
 import com.company.project.model.Trainorder;
 import com.company.project.service.TrainorderService;
 import com.company.project.core.AbstractService;
@@ -20,14 +20,14 @@ import java.util.List;
 @Transactional
 public class TrainorderServiceImpl extends AbstractService<Trainorder> implements TrainorderService {
     @Resource
-    private TrainorderMapper trainorderMapper;
+    private TrainorderDAO trainorderDAO;
 
     /*
     获取某一天的所有订单
      */
     @Override
     public List<Trainorder> getOrderByTime(LocalDate time){
-        List<Trainorder> orders=trainorderMapper.selectAll();
+        List<Trainorder> orders= trainorderDAO.selectAll();
         List<Trainorder> dayorders=new LinkedList<>();
         for (Trainorder trainorder:orders){
             if(trainorder.getTraindate().equals(time)){

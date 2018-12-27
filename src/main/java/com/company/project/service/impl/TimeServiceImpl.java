@@ -1,6 +1,6 @@
 package com.company.project.service.impl;
 
-import com.company.project.dao.TimeMapper;
+import com.company.project.dao.TimeDAO;
 import com.company.project.model.Time;
 import com.company.project.service.TimeService;
 import com.company.project.core.AbstractService;
@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,7 +20,7 @@ import java.util.Date;
 @Transactional
 public class TimeServiceImpl extends AbstractService<Time> implements TimeService {
     @Resource
-    private TimeMapper timeMapper;
+    private TimeDAO timeDAO;
 
 
     public Time time(){
@@ -39,7 +38,7 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
         time.setStationorder(new BigDecimal(1));
         time.setTraindate(date);
         time.setRemainingseat(new BigDecimal(12));
-        timeMapper.insert(time);
+        timeDAO.insert(time);
         return time;
     }
 
