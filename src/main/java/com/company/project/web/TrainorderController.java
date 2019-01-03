@@ -1,16 +1,21 @@
 package com.company.project.web;
 import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
+import com.company.project.dao.TimeDAO;
+import com.company.project.model.Passenger;
 import com.company.project.model.Trainorder;
+import com.company.project.service.PassengerService;
+import com.company.project.service.TimeService;
 import com.company.project.service.TrainorderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import jdk.vm.ci.meta.Local;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +26,60 @@ import java.util.List;
 public class TrainorderController {
     @Resource
     private TrainorderService trainorderService;
+    private PassengerService passengerService;
+    private TimeService timeService;
+    private TimeDAO timeDAO;
+
+    @GetMapping("/findHistoryOrder")
+    public List<Trainorder> findHistoryOrder(@RequestParam("accountid") String accountid, @RequestParam("start") Date start, @RequestParam("end") Date end) {
+
+        return trainorderService.findHistoryOrder(accountid, start, end);
+    }
+
+    @GetMapping("/createOrder")
+    public boolean createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") LocalDate traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
+
+        BigDecimal startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
+        BigDecimal arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
+
+        int start = startOrder.intValue();
+        int arrive = arriveOrder.intValue();
+
+        //查询途中各站有无余票
+        for( int i = start; i <= arrive; i++ ){
+            BigDecimal stationorder = new BigDecimal(i);
+            boolean isLeft = timeService.isTicketLeft(trainnumber, traindate, stationorder);
+            if(isLeft != true){
+                return false;
+            }
+        }
+
+        Passenger passenger = passengerService.findById(accountid);
+        String name = passenger.getName();
+        String card = passenger.getCardid();
+
+        timeDAO.sell(trainnumber, traindate, startOrder, arriveOrder, 1);
+
+        return trainorderService.createOrder(accountid, trainnumber, traindate, startlocation, arrivelocation, name, card);
+    }
+
+    @GetMapping("/cancelOrder")
+    public boolean cancelOrder(@RequestParam("orderid") String orderid){
+
+        Trainorder order = trainorderService.findById(orderid);
+
+        String trainnumber = order.getTrainnumber();
+        LocalDate traindate = order.getTraindate();
+        String startlocation = order.getStartlocation();
+        String arrivelocation = order.getArrivelocation();
+
+        BigDecimal startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
+        BigDecimal arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
+
+        timeDAO.back(trainnumber, traindate, startOrder, arriveOrder, 1);
+
+        return trainorderService.cancelOrder(orderid);
+    }
 
     @PostMapping("/add")
     public Result add(Trainorder trainorder) {

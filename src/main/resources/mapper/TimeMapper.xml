@@ -15,4 +15,34 @@
     <result column="REMAININGSEAT" jdbcType="NUMERIC" property="remainingseat" />
     <result column="DURATION" jdbcType="TIMESTAMP" property="duration" />
   </resultMap>
+
+  <!-- public List<Time> findTrain(Date date, String start, String arrive)-->
+  <select id="findTrain" resultType="com.company.project.model.Time">
+        select a.TRAINNUMBER, a.TRAINDATE, a.STATIONORDER, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION from Time a, Time b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{arrive} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
+  </select>
+
+  <!--BigDecimal findStationOrder(String trainnumber, Date traindate, String station)-->
+  <select id="findStationOrder" resultType="com.company.project.model.Time">
+        select STATIONORDER from Time where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATION = #{station}
+  </select>
+
+  <!--void sell(String trainnumber, Date traindate, BigDecimal startOrder, BigDecimal arriveOrder, int num)-->
+  <update id="sell" parameterType="com.company.project.model.Time">
+    update Time
+    set REMAININGSEAT = REMAININGSEAT - #{num}
+    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and (STATIONORDER between #{startOrder} and #{arriveOrder})
+  </update>
+
+  <!--void back(String trainnumber, Date traindate, BigDecimal startOrder, BigDecimal arriveOrder, int num)-->
+  <update id="back" parameterType="com.company.project.model.Time">
+    update Time
+    set REMAININGSEAT = REMAININGSEAT + #{num}
+    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and (STATIONORDER between #{startOrder} and #{arriveOrder})
+  </update>
+
+  <!--BigDecimal findRemainSeat(String trainnumber, Date traindate, BigDecimal stationorder)-->
+  <select id="findRemainSeat" resultType="com.company.project.model.Time">
+        select REMAININGSEAT from Time where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER = #{stationorder}
+  </select>
+
 </mapper>

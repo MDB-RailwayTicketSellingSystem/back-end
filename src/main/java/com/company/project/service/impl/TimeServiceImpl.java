@@ -4,13 +4,16 @@ import com.company.project.dao.TimeDAO;
 import com.company.project.model.Time;
 import com.company.project.service.TimeService;
 import com.company.project.core.AbstractService;
+import jdk.vm.ci.meta.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -21,6 +24,32 @@ import java.util.Date;
 public class TimeServiceImpl extends AbstractService<Time> implements TimeService {
     @Resource
     private TimeDAO timeDAO;
+
+    /*
+    查询列车
+     */
+    @Override
+    public List<Time> searchTrain(Date date, String start, String arrive){
+
+        List<Time> result = timeDAO.findTrain(date, start, arrive);
+
+        return result;
+    }
+
+    /*
+    查询剩余座位
+     */
+    @Override
+    public boolean isTicketLeft(String trainnumber, LocalDate traindate, BigDecimal stationorder){
+        BigDecimal count = timeDAO.findRemainSeat(trainnumber, traindate, stationorder);
+        int num = count.intValue();
+        if( num >= 1 ){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 
     public Time time(){

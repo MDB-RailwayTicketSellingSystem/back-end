@@ -5,12 +5,10 @@ import com.company.project.model.Time;
 import com.company.project.service.TimeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +19,13 @@ import java.util.List;
 public class TimeController {
     @Resource
     private TimeService timeService;
+
+    @GetMapping("/findTrain")
+    public List<Time> searchTrain(@RequestParam("date") Date date, @RequestParam("start") String start, @RequestParam("arrive") String arrive) {
+
+
+        return timeService.searchTrain(date, start, arrive);
+    }
 
     @PostMapping("/add")
     public Result add(Time time) {

@@ -21,4 +21,10 @@
   <select id="getOrderByTimeSQL" parameterType="com.company.project.model.Trainorder" resultType="Integer">
     select count(1) from Trainorder where STATE=#{state} and ORDERDATE=#{ordertime}
   </select>
+
+  <!-- public List<Trainorder> findOrder(String accountid, Date start, Date end)-->
+  <select id="findOrder" resultType="com.company.project.model.Trainorder">
+        select * from ( select * from Trainorder where ACCOUNTID = #{accountid} ) where TRAINDATE between #{start} and #{end}
+  </select>
+
 </mapper>
