@@ -42,14 +42,14 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
     订票
      */
     @Override
-    public boolean createOrder(String accountid, String trainnumber, LocalDate traindate, String startlocation, String arrivelocation, String name, String card){
+    public boolean createOrder(String accountid, String trainnumber, LocalDate traindate, int startOrder, int arriveOrder, String name, String card){
         try{
             Trainorder order = new Trainorder();
             order.setAccountid(accountid);
             order.setTrainnumber(trainnumber);
             order.setTraindate(traindate);
-            order.setStartlocation(startlocation);
-            order.setArrivelocation(arrivelocation);
+            order.setStartorder(startOrder);
+            order.setArriveorder(arriveOrder);
             order.setPrice(BigDecimal.valueOf(100));
             order.setState(BigDecimal.valueOf(0));
             order.setOrdertime(LocalDate.now());

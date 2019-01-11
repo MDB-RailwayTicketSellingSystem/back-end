@@ -25,11 +25,11 @@ public class Trainorder {
     @Column(name = "TRAINNUMBER")
     private String trainnumber;
 
-    @Column(name = "STARTLOCATION")
-    private String startlocation;
+    @Column(name = "STARTORDER")
+    private int startorder;
 
-    @Column(name = "ARRIVELOCATION")
-    private String arrivelocation;
+    @Column(name = "ARRIVEORDER")
+    private int arriveorder;
 
     @Column(name = "PRICE")
     private BigDecimal price;
@@ -125,31 +125,31 @@ public class Trainorder {
     }
 
     /**
-     * @return STARTLOCATION
+     * @return STARTORDER
      */
-    public String getStartlocation() {
-        return startlocation;
+    public int getStartorder() {
+        return startorder;
     }
 
     /**
-     * @param startlocation
+     * @param startorder
      */
-    public void setStartlocation(String startlocation) {
-        this.startlocation = startlocation;
+    public void setStartorder(int startorder) {
+        this.startorder = startorder;
     }
 
     /**
-     * @return ARRIVELOCATION
+     * @return ARRIVEORDER
      */
-    public String getArrivelocation() {
-        return arrivelocation;
+    public int getArriveorder() {
+        return arriveorder;
     }
 
     /**
-     * @param arrivelocation
+     * @param arriveorder
      */
-    public void setArrivelocation(String arrivelocation) {
-        this.arrivelocation = arrivelocation;
+    public void setArriveorder(int arriveorder) {
+        this.arriveorder = arriveorder;
     }
 
     /**

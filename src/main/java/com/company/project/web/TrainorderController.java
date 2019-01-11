@@ -39,16 +39,13 @@ public class TrainorderController {
     @GetMapping("/createOrder")
     public boolean createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") LocalDate traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
 
-        BigDecimal startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
-        BigDecimal arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
-
-        int start = startOrder.intValue();
-        int arrive = arriveOrder.intValue();
+        int startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
+        int arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
 
         //查询途中各站有无余票
-        for( int i = start; i <= arrive; i++ ){
-            BigDecimal stationorder = new BigDecimal(i);
-            boolean isLeft = timeService.isTicketLeft(trainnumber, traindate, stationorder);
+        for( int stationOrder = startOrder; stationOrder < arriveOrder; stationOrder++ ){
+
+            boolean isLeft = timeService.isTicketLeft(trainnumber, traindate, stationOrder);
             if(isLeft != true){
                 return false;
             }
@@ -60,7 +57,7 @@ public class TrainorderController {
 
         timeDAO.sell(trainnumber, traindate, startOrder, arriveOrder, 1);
 
-        return trainorderService.createOrder(accountid, trainnumber, traindate, startlocation, arrivelocation, name, card);
+        return trainorderService.createOrder(accountid, trainnumber, traindate, startOrder, arriveOrder, name, card);
     }
 
     @GetMapping("/cancelOrder")
@@ -70,11 +67,8 @@ public class TrainorderController {
 
         String trainnumber = order.getTrainnumber();
         LocalDate traindate = order.getTraindate();
-        String startlocation = order.getStartlocation();
-        String arrivelocation = order.getArrivelocation();
-
-        BigDecimal startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
-        BigDecimal arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
+        int startOrder = order.getStartorder();
+        int arriveOrder = order.getArriveorder();
 
         timeDAO.back(trainnumber, traindate, startOrder, arriveOrder, 1);
 

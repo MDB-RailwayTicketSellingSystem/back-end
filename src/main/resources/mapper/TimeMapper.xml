@@ -26,14 +26,14 @@
         select STATIONORDER from Time where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATION = #{station}
   </select>
 
-  <!--void sell(String trainnumber, Date traindate, BigDecimal startOrder, BigDecimal arriveOrder, int num)-->
+  <!--void sell(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
   <update id="sell" parameterType="com.company.project.model.Time">
     update Time
     set REMAININGSEAT = REMAININGSEAT - #{num}
     where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and (STATIONORDER between #{startOrder} and #{arriveOrder})
   </update>
 
-  <!--void back(String trainnumber, Date traindate, BigDecimal startOrder, BigDecimal arriveOrder, int num)-->
+  <!--void back(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
   <update id="back" parameterType="com.company.project.model.Time">
     update Time
     set REMAININGSEAT = REMAININGSEAT + #{num}
