@@ -92,7 +92,7 @@ public class TrainorderController {
     }
 
     @GetMapping("/cancelOrder")
-    public boolean cancelOrder(@RequestParam("orderid") String orderid){
+    public Result cancelOrder(@RequestParam("orderid") String orderid){
 
         Trainorder order = trainorderService.findById(orderid);
 
@@ -103,7 +103,7 @@ public class TrainorderController {
 
         timeDAO.back(trainnumber, traindate, startOrder, arriveOrder, 1);
 
-        return trainorderService.cancelOrder(orderid);
+        return ResultGenerator.genSuccessResult(trainorderService.cancelOrder(orderid));
     }
 
     @PostMapping("/add")
