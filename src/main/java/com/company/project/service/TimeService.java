@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface TimeService extends Service<Time> {
 
-    List<Time> searchTrain(Date date, String start, String arrive);
+    List<Time> searchTrain(LocalDate date, String start, String arrive);
     boolean isTicketLeft(String trainnumber, LocalDate traindate, int stationorder);
 
 }

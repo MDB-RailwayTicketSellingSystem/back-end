@@ -28,7 +28,7 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     查询列车
      */
     @Override
-    public List<Time> searchTrain(Date date, String start, String arrive){
+    public List<Time> searchTrain(LocalDate date, String start, String arrive){
 
         List<Time> result = timeDAO.findTrain(date, start, arrive);
 
@@ -40,8 +40,7 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
      */
     @Override
     public boolean isTicketLeft(String trainnumber, LocalDate traindate, int stationorder){
-        BigDecimal count = timeDAO.findRemainSeat(trainnumber, traindate, stationorder);
-        int num = count.intValue();
+        int num = timeDAO.findRemainSeat(trainnumber, traindate, stationorder);
         if( num >= 1 ){
             return true;
         }

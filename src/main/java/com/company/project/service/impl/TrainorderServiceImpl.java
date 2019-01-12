@@ -31,7 +31,8 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
     查询历史订票
      */
     @Override
-    public List<Trainorder> findHistoryOrder(String accountid, Date start, Date end) {
+    public List<Trainorder> findHistoryOrder(String accountid, LocalDate start, LocalDate end) {
+
 
         List<Trainorder> result = trainorderDAO.findOrder(accountid, start, end);
 
@@ -43,26 +44,23 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
      */
     @Override
     public boolean createOrder(String accountid, String trainnumber, LocalDate traindate, int startOrder, int arriveOrder, String name, String card){
-        try{
+
             Trainorder order = new Trainorder();
             order.setAccountid(accountid);
             order.setTrainnumber(trainnumber);
             order.setTraindate(traindate);
             order.setStartorder(startOrder);
             order.setArriveorder(arriveOrder);
-            order.setPrice(BigDecimal.valueOf(100));
-            order.setState(BigDecimal.valueOf(0));
+            order.setPrice(100);
+            order.setState(0);
             order.setOrdertime(LocalDate.now());
             order.setName(name);
             order.setPassengercard(card);
             order.setOrderid( accountid + LocalDate.now().toString() ); //订单ID：用户ID+下单时间
             save(order);
 
+            //System.out.println(order.getAccountid());
             return true;
-        } catch (Exception e){
-            return false;
-        }
-
     }
 
     /*
@@ -72,7 +70,7 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
     public boolean cancelOrder(String orderid){
         try{
             Trainorder order = findById(orderid);
-            order.setState(BigDecimal.valueOf(2));
+            order.setState(2);
 
             update(order);
 

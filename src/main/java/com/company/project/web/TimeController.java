@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class TimeController {
     private TimeService timeService;
 
     @GetMapping("/findTrain")
-    public List<Time> searchTrain(@RequestParam("date") Date date, @RequestParam("start") String start, @RequestParam("arrive") String arrive) {
+    public List<Time> searchTrain(@RequestParam("date") LocalDate date, @RequestParam("start") String start, @RequestParam("arrive") String arrive) {
 
 
         return timeService.searchTrain(date, start, arrive);

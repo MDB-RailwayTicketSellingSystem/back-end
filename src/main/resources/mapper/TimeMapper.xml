@@ -17,31 +17,31 @@
   </resultMap>
 
   <!-- public List<Time> findTrain(Date date, String start, String arrive)-->
-  <select id="findTrain" resultType="com.company.project.model.Time">
-        select a.TRAINNUMBER, a.TRAINDATE, a.STATIONORDER, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION from Time a, Time b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{arrive} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
+  <select id="findTrain" resultMap="BaseResultMap" >
+        select a.TRAINNUMBER, a.STATIONORDER, a.STATION, a.TRAINDATE, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION from Time a, Time b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{end} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
   </select>
 
   <!--BigDecimal findStationOrder(String trainnumber, Date traindate, String station)-->
-  <select id="findStationOrder" resultType="com.company.project.model.Time">
+  <select id="findStationOrder" resultType="int">
         select STATIONORDER from Time where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATION = #{station}
   </select>
 
   <!--void sell(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
-  <update id="sell" parameterType="com.company.project.model.Time">
+  <update id="sell" >
     update Time
     set REMAININGSEAT = REMAININGSEAT - #{num}
-    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and (STATIONORDER between #{startOrder} and #{arriveOrder})
+    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<=]]> #{arriveOrder}
   </update>
 
   <!--void back(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
-  <update id="back" parameterType="com.company.project.model.Time">
+  <update id="back" >
     update Time
     set REMAININGSEAT = REMAININGSEAT + #{num}
-    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and (STATIONORDER between #{startOrder} and #{arriveOrder})
+    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<=]]> #{arriveOrder}
   </update>
 
-  <!--BigDecimal findRemainSeat(String trainnumber, Date traindate, BigDecimal stationorder)-->
-  <select id="findRemainSeat" resultType="com.company.project.model.Time">
+  <!--BigDecimal findRemainSeat(String trainnumber, Date traindate, int stationorder)-->
+  <select id="findRemainSeat" resultType="int">
         select REMAININGSEAT from Time where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER = #{stationorder}
   </select>
 

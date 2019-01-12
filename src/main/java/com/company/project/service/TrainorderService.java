@@ -13,7 +13,7 @@ import java.util.List;
 public interface TrainorderService extends Service<Trainorder> {
 
     public List<Trainorder> getOrderByTime(LocalDate time);
-    List<Trainorder> findHistoryOrder(String accountid, Date start, Date end);
+    List<Trainorder> findHistoryOrder(String accountid, LocalDate start, LocalDate end);
     boolean createOrder(String accountid, String trainnumber, LocalDate traindate, int startOrder, int arriveOrder, String name, String card);
     boolean cancelOrder(String orderid);
 }

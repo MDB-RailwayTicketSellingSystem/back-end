@@ -32,10 +32,10 @@ public class Trainorder {
     private int arriveorder;
 
     @Column(name = "PRICE")
-    private BigDecimal price;
+    private int price;
 
     @Column(name = "STATE")
-    private BigDecimal state;
+    private int state;
 
     @Column(name = "ORDERDATE")
     private LocalDate ordertime;
@@ -155,28 +155,28 @@ public class Trainorder {
     /**
      * @return PRICE
      */
-    public BigDecimal getPrice() {
+    public int getPrice() {
         return price;
     }
 
     /**
      * @param price
      */
-    public void setPrice(BigDecimal price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
     /**
      * @return STATE
      */
-    public BigDecimal getState() {
+    public int getState() {
         return state;
     }
 
     /**
      * @param state
      */
-    public void setState(BigDecimal state) {
+    public void setState(int state) {
         this.state = state;
     }
 

@@ -30,7 +30,7 @@ public class TrainorderController {
     private TimeDAO timeDAO;
 
     @GetMapping("/findHistoryOrder")
-    public List<Trainorder> findHistoryOrder(@RequestParam("accountid") String accountid, @RequestParam("start") Date start, @RequestParam("end") Date end) {
+    public List<Trainorder> findHistoryOrder(@RequestParam("accountid") String accountid, @RequestParam("start") LocalDate start, @RequestParam("end") LocalDate end) {
 
         return trainorderService.findHistoryOrder(accountid, start, end);
     }

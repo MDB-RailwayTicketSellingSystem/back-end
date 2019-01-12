@@ -34,7 +34,7 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
         for(int i=0;i<bet;i++){
             LocalDate current=start.plusDays(i);
             Trainorder trainorder=new Trainorder();
-            trainorder.setState(new BigDecimal(status));
+            trainorder.setState(status);
             trainorder.setOrdertime(current);
             List<Trainorder> trainorders= trainorderDAO.select(trainorder);
             map.put(current,trainorders.size());
