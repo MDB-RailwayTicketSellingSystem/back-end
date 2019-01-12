@@ -60,8 +60,8 @@ public class AdminController {
         LocalDate endDateTime = LocalDate.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         if(beginDateTime.isAfter(endDateTime))
             return ResultGenerator.genFailResult("wrong input date!!!");
-        Map<LocalDate,Object> map=adminServiceImpl.findbyTime(beginDateTime,endDateTime,status);
-        return ResultGenerator.genSuccessResult(map);
+       // Map<LocalDate,Object> map=adminServiceImpl.findbyTime(beginDateTime,endDateTime,status);
+        return ResultGenerator.genSuccessResult(adminServiceImpl.findbyTime(beginDateTime,endDateTime,status));
     }
 
     @GetMapping(value = "/insert")
