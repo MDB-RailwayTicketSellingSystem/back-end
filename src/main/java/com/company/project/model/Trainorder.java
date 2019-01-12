@@ -1,7 +1,7 @@
 package com.company.project.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -20,7 +20,7 @@ public class Trainorder {
     private String name;
 
     @Column(name = "TRAINDATE")
-    private LocalDate traindate;
+    private Date traindate;
 
     @Column(name = "TRAINNUMBER")
     private String trainnumber;
@@ -38,7 +38,7 @@ public class Trainorder {
     private int state;
 
     @Column(name = "ORDERDATE")
-    private LocalDate ordertime;
+    private Date ordertime;
 
     /**
      * @return ORDERID
@@ -99,14 +99,14 @@ public class Trainorder {
     /**
      * @return TRAINDATE
      */
-    public LocalDate getTraindate() {
+    public Date getTraindate() {
         return traindate;
     }
 
     /**
      * @param traindate
      */
-    public void setTraindate(LocalDate traindate) {
+    public void setTraindate(Date traindate) {
         this.traindate = traindate;
     }
 
@@ -180,11 +180,11 @@ public class Trainorder {
         this.state = state;
     }
 
-    public LocalDate getOrdertime() {
+    public Date getOrdertime() {
         return ordertime;
     }
 
-    public void setOrdertime(LocalDate ordertime) {
+    public void setOrdertime(Date ordertime) {
         this.ordertime = ordertime;
     }
 }

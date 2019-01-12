@@ -9,11 +9,13 @@ import com.company.project.service.AdminService;
 import com.company.project.service.PassengerService;
 import com.company.project.service.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -32,6 +34,14 @@ public class AdminController {
 
     @Autowired
     TimeService timeServiceImpl;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+
+        //转换日期
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器
+    }
 
 
     /*
@@ -53,15 +63,14 @@ public class AdminController {
     获取某段时间的新增订单数,状态数可输
      */
     @GetMapping(value = "/addCount")
-    public Result getAddCountPerDay(@RequestParam String start,
-                                    @RequestParam String  end,
+    public Result getAddCountPerDay(@RequestParam Date start,
+                                    @RequestParam Date  end,
                                     @RequestParam int status){
-        LocalDate beginDateTime = LocalDate.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        LocalDate endDateTime = LocalDate.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        if(beginDateTime.isAfter(endDateTime))
+
+        if(start.compareTo(end)>0)
             return ResultGenerator.genFailResult("wrong input date!!!");
        // Map<LocalDate,Object> map=adminServiceImpl.findbyTime(beginDateTime,endDateTime,status);
-        return ResultGenerator.genSuccessResult(adminServiceImpl.findbyTime(beginDateTime,endDateTime,status));
+        return ResultGenerator.genSuccessResult(adminServiceImpl.findbyTime(start,end,status));
     }
 
     @GetMapping(value = "/insert")

@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @SpringBootTest
 public class OrderTest {
 
-    @Resource
+   /* @Resource
     TrainorderDAO trainorderDAO;
 
     @Autowired
@@ -54,6 +54,6 @@ public class OrderTest {
         //System.out.println(trainorderDAO.findOrder("3", localDate, localDate).size());
         System.out.println(trainorderDAO.findOrder("3", localDate, localDate));
     }
-
+*/
 
 }

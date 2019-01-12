@@ -9,11 +9,16 @@ import com.company.project.service.TimeService;
 import com.company.project.service.TrainorderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -29,14 +34,23 @@ public class TrainorderController {
     private TimeService timeService;
     private TimeDAO timeDAO;
 
-    @GetMapping("/findHistoryOrder")
-    public List<Trainorder> findHistoryOrder(@RequestParam("accountid") String accountid, @RequestParam("start") LocalDate start, @RequestParam("end") LocalDate end) {
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
 
-        return trainorderService.findHistoryOrder(accountid, start, end);
+        //转换日期
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器
+    }
+
+
+    @GetMapping("/findHistoryOrder")
+    public List<Trainorder> findHistoryOrder(@RequestParam("accountid") String accountid, @RequestParam("start") Date start, @RequestParam("end") Date end) {
+
+        return trainorderService.findHistoryOrder(accountid,start , end);
     }
 
     @GetMapping("/createOrder")
-    public boolean createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") LocalDate traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
+    public boolean createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") Date traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
 
         int startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
         int arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
@@ -65,7 +79,7 @@ public class TrainorderController {
         Trainorder order = trainorderService.findById(orderid);
 
         String trainnumber = order.getTrainnumber();
-        LocalDate traindate = order.getTraindate();
+        Date traindate = order.getTraindate();
         int startOrder = order.getStartorder();
         int arriveOrder = order.getArriveorder();
 

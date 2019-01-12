@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -26,14 +26,17 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
     两个日期之间每一天的新增订单数量
      */
     @Override
-    public  List<Map<String,Object>> findbyTime(LocalDate start, LocalDate end, int status)
+    public  List<Map<String,Object>> findbyTime(Date start, Date end, int status)
     {
         List<Map<String,Object>> list=new LinkedList<>();
-        long between=start.until(end, ChronoUnit.DAYS);//相差天数
-        int bet=Integer.parseInt(String.valueOf(between));
-        for(int i=0;i<bet;i++){
+        int between=(int) (end.getTime() - start.getTime());//相差天数
+
+        for(int i=0;i<between;i++){
             Map<String,Object> map=new HashMap<String, Object>();
-            LocalDate current=start.plusDays(i);
+            Calendar c = Calendar.getInstance();
+            c.setTime(start);
+            c.add(Calendar.DAY_OF_MONTH, i);
+            Date current= c.getTime();
             Trainorder trainorder=new Trainorder();
             trainorder.setState(status);
             trainorder.setOrdertime(current);

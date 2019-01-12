@@ -3,7 +3,7 @@ import com.company.project.model.Time;
 import com.company.project.core.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface TimeService extends Service<Time> {
 
-    List<Time> searchTrain(LocalDate date, String start, String arrive);
-    boolean isTicketLeft(String trainnumber, LocalDate traindate, int stationorder);
+    List<Time> searchTrain(Date date, String start, String arrive);
+    boolean isTicketLeft(String trainnumber, Date traindate, int stationorder);
 
 }

@@ -1,9 +1,8 @@
 package com.company.project.web;
 import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
-import com.company.project.model.Passenger;
-import com.company.project.service.PassengerService;
-import com.company.project.service.impl.PassengerServiceImpl;
+import com.company.project.model.Seatting;
+import com.company.project.service.SeattingService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -12,20 +11,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 /**
-* Created by CodeGenerator on 2018/12/03.
+* Created by CodeGenerator on 2019/01/12.
 */
 @RestController
-@RequestMapping("/passenger")
-public class PassengerController {
+@RequestMapping("/seatting")
+public class SeattingController {
     @Resource
-    private PassengerService passengerServiceImpl;
+    private SeattingService seattingService;
     @InitBinder
     public void initBinder(WebDataBinder binder, WebRequest request) {
 
@@ -35,52 +33,34 @@ public class PassengerController {
     }
 
     @PostMapping("/add")
-    public Result add(Passenger passenger) {
-        passengerServiceImpl.save(passenger);
+    public Result add(Seatting seatting) {
+        seattingService.save(seatting);
         return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/delete")
     public Result delete(@RequestParam Integer id) {
-        passengerServiceImpl.deleteById(id);
+        seattingService.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/update")
-    public Result update(Passenger passenger) {
-        passengerServiceImpl.update(passenger);
+    public Result update(Seatting seatting) {
+        seattingService.update(seatting);
         return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/detail")
-    public Result detail(@RequestParam String id) {
-        Passenger passenger = passengerServiceImpl.findById(id);
-        return ResultGenerator.genSuccessResult(passenger);
+    public Result detail(@RequestParam Integer id) {
+        Seatting seatting = seattingService.findById(id);
+        return ResultGenerator.genSuccessResult(seatting);
     }
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
-        List<Passenger> list = passengerServiceImpl.findAll();
+        List<Seatting> list = seattingService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
-
-    /*
-    用户登录
-     */
-    @GetMapping("/login")
-    public Result login(@RequestParam(value = "name") String username,
-                        @RequestParam(value = "password")String password){
-
-        boolean isValidUser=passengerServiceImpl.haveMatchCount(username,password,0);
-        if(!isValidUser)return ResultGenerator.genFailResult("错误！!");
-        else
-        {
-            Passenger passenger=passengerServiceImpl.findPassenger(username,password,0);
-            return ResultGenerator.genSuccessResult(passenger.getAccountid());
-        }
-    }
-
-
 }

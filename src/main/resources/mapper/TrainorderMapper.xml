@@ -26,10 +26,10 @@
   <select id="findOrder"  resultMap="BaseResultMap">
         select o1.ORDERID, o1.NAME, o1.PASSENGERCARD, o1.TRAINDATE, o1.TRAINNUMBER, t1.STATION, t2.STATION, o1.PRICE, o1.STATE, o1.ORDERDATE
         from ( Trainorder o1 JOIN Time t1
-              ON o1.TRAINDATE = t1.TRAINDATE and o1.TRAINNUMBER = t1.TRAINNUMBER and o1.STARTORDER = t1.STATIONORDER )
+              ON o1.TRAINNUMBER = t1.TRAINNUMBER and o1.STARTORDER = t1.STATIONORDER )
               ,
-              ( Trainorder o2 JOIN Time t2
-              ON o2.TRAINDATE = t2.TRAINDATE and o2.TRAINNUMBER = t2.TRAINNUMBER and o2.ARRIVEORDER = t2.STATIONORDER )
+              ( Trainorder o2 JOIN Time  t2
+              ON o2.TRAINNUMBER = t2.TRAINNUMBER and o2.ARRIVEORDER = t2.STATIONORDER )
         where o1.ACCOUNTID = #{accountid} and o2.ACCOUNTID = #{accountid} and o1.TRAINDATE <![CDATA[>=]]> #{start} and o1.TRAINDATE <![CDATA[<=]]> #{end} and o2.TRAINDATE <![CDATA[>=]]> #{start} and o2.TRAINDATE <![CDATA[<=]]> #{end}
   </select>
 

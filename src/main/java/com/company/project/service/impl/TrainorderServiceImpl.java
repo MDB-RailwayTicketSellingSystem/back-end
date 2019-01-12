@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
     查询历史订票
      */
     @Override
-    public List<Trainorder> findHistoryOrder(String accountid, LocalDate start, LocalDate end) {
+    public List<Trainorder> findHistoryOrder(String accountid, Date start, Date end) {
 
 
         List<Trainorder> result = trainorderDAO.findOrder(accountid, start, end);
@@ -43,7 +42,7 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
     订票
      */
     @Override
-    public boolean createOrder(String accountid, String trainnumber, LocalDate traindate, int startOrder, int arriveOrder, String name, String card){
+    public boolean createOrder(String accountid, String trainnumber, Date traindate, int startOrder, int arriveOrder, String name, String card){
 
             Trainorder order = new Trainorder();
             order.setAccountid(accountid);
@@ -53,10 +52,10 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
             order.setArriveorder(arriveOrder);
             order.setPrice(100);
             order.setState(0);
-            order.setOrdertime(LocalDate.now());
+            order.setOrdertime(new Date());
             order.setName(name);
             order.setPassengercard(card);
-            order.setOrderid( accountid + LocalDate.now().toString() ); //订单ID：用户ID+下单时间
+            order.setOrderid( accountid + new Date().toString() ); //订单ID：用户ID+下单时间
             save(order);
 
             //System.out.println(order.getAccountid());
@@ -85,7 +84,7 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
     获取某一天的所有订单
      */
     @Override
-    public List<Trainorder> getOrderByTime(LocalDate time){
+    public List<Trainorder> getOrderByTime(Date time){
         List<Trainorder> orders= trainorderDAO.selectAll();
         List<Trainorder> dayorders=new LinkedList<>();
         for (Trainorder trainorder:orders){

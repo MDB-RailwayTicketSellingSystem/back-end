@@ -11,7 +11,7 @@ import java.util.List;
 public interface TrainorderDAO extends Mapper<Trainorder> {
 
      int getOrderByTimeSQL(Trainorder trainorder);//获取某天的订单数量
-     List<Trainorder> findOrder(@Param("accountid") String accountid, @Param("start") LocalDate start, @Param("end") LocalDate end);
+     List<Trainorder> findOrder(@Param("accountid") String accountid, @Param("start") Date start, @Param("end") Date end);
 
 
 }

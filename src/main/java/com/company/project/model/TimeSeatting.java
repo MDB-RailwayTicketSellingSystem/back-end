@@ -1,28 +1,26 @@
 package com.company.project.model;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Time {
-    @Id
-    @Column(name = "TRAINNUMBER")
+public class TimeSeatting {
+
     private String trainnumber;
 
-    @Column(name = "STATIONORDER")
+
     private BigDecimal stationorder;
 
-    @Column(name = "STATION")
+
     private String station;
 
-    @Column(name = "ARRIVETIME")
+
     private Date arrivetime;
 
-    @Column(name = "LEAVETIME")
+
     private Date leavetime;
 
-    @Column(name = "DURATION")
+
     private Date duration;
 
     /**
@@ -107,5 +105,40 @@ public class Time {
      */
     public void setDuration(Date duration) {
         this.duration = duration;
+    }
+
+
+    private Short remainingseat;
+
+
+    private Date traindate;
+
+
+    /**
+     * @return REMAININGSEAT
+     */
+    public Short getRemainingseat() {
+        return remainingseat;
+    }
+
+    /**
+     * @param remainingseat
+     */
+    public void setRemainingseat(Short remainingseat) {
+        this.remainingseat = remainingseat;
+    }
+
+    /**
+     * @return TRAINDATE
+     */
+    public Date getTraindate() {
+        return traindate;
+    }
+
+    /**
+     * @param traindate
+     */
+    public void setTraindate(Date traindate) {
+        this.traindate = traindate;
     }
 }

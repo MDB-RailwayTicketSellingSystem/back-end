@@ -5,44 +5,40 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="TRAINID" jdbcType="VARCHAR" property="trainid" />
-    <result column="TRAINNUMBER" jdbcType="VARCHAR" property="trainnumber" />
+    <id column="TRAINNUMBER" jdbcType="VARCHAR" property="trainnumber" />
     <result column="STATIONORDER" jdbcType="NUMERIC" property="stationorder" />
     <result column="STATION" jdbcType="VARCHAR" property="station" />
-    <result column="TRAINDATE" jdbcType="TIMESTAMP" property="traindate" />
     <result column="ARRIVETIME" jdbcType="TIMESTAMP" property="arrivetime" />
     <result column="LEAVETIME" jdbcType="TIMESTAMP" property="leavetime" />
-    <result column="REMAININGSEAT" jdbcType="NUMERIC" property="remainingseat" />
     <result column="DURATION" jdbcType="TIMESTAMP" property="duration" />
   </resultMap>
-
   <!-- public List<Time> findTrain(Date date, String start, String arrive)-->
   <select id="findTrain" resultMap="BaseResultMap" >
-        select a.TRAINNUMBER, a.STATIONORDER, a.STATION, a.TRAINDATE, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION from Time a, Time b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{end} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
+
+        select a.TRAINNUMBER, a.STATIONORDER, a.STATION, a.TRAINDATE, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION from (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) a, (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{end} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
   </select>
 
   <!--BigDecimal findStationOrder(String trainnumber, Date traindate, String station)-->
   <select id="findStationOrder" resultType="int">
-        select STATIONORDER from Time where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATION = #{station}
+        select STATIONORDER from (select * from Time t inner join Seatting s on (t.trainnumber=s.trainnumber and t.stationorder=s.stationorder)) where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATION = #{station}
   </select>
 
   <!--void sell(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
   <update id="sell" >
-    update Time
+    update Seatting
     set REMAININGSEAT = REMAININGSEAT - #{num}
     where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<=]]> #{arriveOrder}
   </update>
 
   <!--void back(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
   <update id="back" >
-    update Time
+    update Seatting
     set REMAININGSEAT = REMAININGSEAT + #{num}
     where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<=]]> #{arriveOrder}
   </update>
 
   <!--BigDecimal findRemainSeat(String trainnumber, Date traindate, int stationorder)-->
   <select id="findRemainSeat" resultType="int">
-        select REMAININGSEAT from Time where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER = #{stationorder}
+        select REMAININGSEAT from (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) )where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER = #{stationorder}
   </select>
-
 </mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.SeattingDAO">
+  <resultMap id="BaseResultMap" type="com.company.project.model.Seatting">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="TRAINNUMBER" jdbcType="VARCHAR" property="trainnumber" />
+    <result column="STATIONORDER" jdbcType="NUMERIC" property="stationorder" />
+    <result column="REMAININGSEAT" jdbcType="NUMERIC" property="remainingseat" />
+    <result column="TRAINDATE" jdbcType="TIMESTAMP" property="traindate" />
+  </resultMap>
+</mapper>

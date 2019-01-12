@@ -1,7 +1,10 @@
 package com.company.project.service.impl;
 
+
 import com.company.project.dao.TimeDAO;
+import com.company.project.model.Seatting;
 import com.company.project.model.Time;
+import com.company.project.model.TimeSeatting;
 import com.company.project.service.TimeService;
 import com.company.project.core.AbstractService;
 import org.springframework.stereotype.Service;
@@ -9,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +31,7 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     查询列车
      */
     @Override
-    public List<Time> searchTrain(LocalDate date, String start, String arrive){
+    public List<Time> searchTrain(Date date, String start, String arrive){
 
         List<Time> result = timeDAO.findTrain(date, start, arrive);
 
@@ -39,7 +42,7 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     查询剩余座位
      */
     @Override
-    public boolean isTicketLeft(String trainnumber, LocalDate traindate, int stationorder){
+    public boolean isTicketLeft(String trainnumber, Date traindate, int stationorder){
         int num = timeDAO.findRemainSeat(trainnumber, traindate, stationorder);
         if( num >= 1 ){
             return true;
@@ -51,7 +54,8 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
 
 
     public Time time(){
-        Time time=new Time();
+/*
+        TimeSeatting time=new TimeSeatting();
         Date date=new Date();
         time.setArrivetime(new Date());
         Calendar c=Calendar.getInstance();
@@ -63,10 +67,13 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
         time.setDuration(c.getTime());
         time.setStation("2");
         time.setStationorder(new BigDecimal(1));
+
         time.setTraindate(date);
-        time.setRemainingseat(new BigDecimal(12));
+        time.setRemainingseat(Short.valueOf("12"));
         timeDAO.insert(time);
         return time;
+        */
+return new Time();
     }
 
 

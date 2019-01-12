@@ -5,10 +5,18 @@ import com.company.project.model.Time;
 import com.company.project.service.TimeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -20,12 +28,20 @@ import java.util.List;
 public class TimeController {
     @Resource
     private TimeService timeService;
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+
+        //转换日期
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器
+    }
 
     @GetMapping("/findTrain")
-    public List<Time> searchTrain(@RequestParam("date") LocalDate date, @RequestParam("start") String start, @RequestParam("arrive") String arrive) {
+    public Result searchTrain(@RequestParam("date") Date date, @RequestParam("start") String start, @RequestParam("arrive")String arrive) {
 
 
-        return timeService.searchTrain(date, start, arrive);
+
+        return ResultGenerator.genSuccessResult(timeService.searchTrain(date, start, arrive));
     }
 
     @PostMapping("/add")
