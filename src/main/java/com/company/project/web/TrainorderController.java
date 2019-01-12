@@ -65,7 +65,7 @@ public class TrainorderController {
     }
 
     @GetMapping("/createOrder")
-    public Result createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") Date traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
+    public Result createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") Date traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation , @RequestParam("name") String name, @RequestParam("passengercard") String passengercard){
 
         System.out.println("start"+"arrive");
         int startOrder = timeDAO.findStationOrder(trainnumber, startlocation);
@@ -82,13 +82,13 @@ public class TrainorderController {
             }
         }
 
-        Passenger passenger = passengerService.findById(accountid);
-        String name = passenger.getName();
-        String card = passenger.getCardid();
+        //Passenger passenger = passengerService.findById(accountid);
+        //String name = passenger.getName();
+        //String card = passenger.getCardid();
 
         timeDAO.sell(trainnumber, traindate, startOrder, arriveOrder, 1);
 
-        return ResultGenerator.genSuccessResult(trainorderService.createOrder(accountid, trainnumber, traindate, startOrder, arriveOrder, name, card));
+        return ResultGenerator.genSuccessResult(trainorderService.createOrder(accountid, trainnumber, traindate, startOrder, arriveOrder, name, passengercard));
     }
 
     @GetMapping("/cancelOrder")
