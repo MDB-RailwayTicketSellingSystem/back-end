@@ -51,17 +51,20 @@ public class TrainorderController {
     }
 
     @GetMapping("/createOrder")
-    public boolean createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") Date traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
+    public Result createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") Date traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
 
+        System.out.println("start"+"arrive");
         int startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
+        System.out.println("start"+"1111arrive");
         int arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
+        System.out.println("start"+startOrder+"arrive"+arriveOrder);
 
         //查询途中各站有无余票
         for( int stationOrder = startOrder; stationOrder < arriveOrder; stationOrder++ ){
 
             boolean isLeft = timeService.isTicketLeft(trainnumber, traindate, stationOrder);
             if(isLeft != true){
-                return false;
+                return ResultGenerator.genFailResult("no tickets");
             }
         }
 
@@ -71,7 +74,7 @@ public class TrainorderController {
 
         timeDAO.sell(trainnumber, traindate, startOrder, arriveOrder, 1);
 
-        return trainorderService.createOrder(accountid, trainnumber, traindate, startOrder, arriveOrder, name, card);
+        return ResultGenerator.genSuccessResult(trainorderService.createOrder(accountid, trainnumber, traindate, startOrder, arriveOrder, name, card));
     }
 
     @GetMapping("/cancelOrder")
