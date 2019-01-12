@@ -11,8 +11,8 @@
     <result column="NAME" jdbcType="VARCHAR" property="name" />
     <result column="TRAINDATE" jdbcType="TIMESTAMP" property="traindate" />
     <result column="TRAINNUMBER" jdbcType="VARCHAR" property="trainnumber" />
-    <result column="STARTLOCATION" jdbcType="VARCHAR" property="startlocation" />
-    <result column="ARRIVELOCATION" jdbcType="VARCHAR" property="arrivelocation" />
+    <result column="STARTORDER" jdbcType="NUMERIC" property="startorder" />
+    <result column="ARRIVEORDER" jdbcType="NUMERIC" property="arriveorder" />
     <result column="PRICE" jdbcType="NUMERIC" property="price" />
     <result column="STATE" jdbcType="NUMERIC" property="state" />
     <result column="ORDERDATE" javaType="Date" property="ordertime"/>
