@@ -50,6 +50,9 @@ public class TimeController {
             train.arrivetimeresult = train.formatter.format(train.arrivetime);
             train.leavetimeresult = train.formatter.format(train.leavetime);
             train.durationresult = train.formatter.format(train.duration);
+
+            train.price = 50 * (train.arriveorder - train.startorder);
+
         }
 
         return trainResults;

@@ -8,10 +8,8 @@ import com.company.project.model.Trainorder;
 import com.company.project.service.PassengerService;
 import com.company.project.service.TimeService;
 import com.company.project.service.TrainorderService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +23,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 /**
 * Created by CodeGenerator on 2018/12/03.
@@ -34,8 +35,11 @@ import java.util.Map;
 public class TrainorderController {
     @Resource
     private TrainorderService trainorderService;
+    @Resource
     private PassengerService passengerService;
+    @Resource
     private TimeService timeService;
+    @Resource
     private TimeDAO timeDAO;
 
     @InitBinder
@@ -64,9 +68,9 @@ public class TrainorderController {
     public Result createOrder(@RequestParam("accountid") String accountid, @RequestParam("trainnumber") String trainnumber, @RequestParam("traindate") Date traindate, @RequestParam("startlocation") String startlocation, @RequestParam("arrivelocation") String arrivelocation){
 
         System.out.println("start"+"arrive");
-        int startOrder = timeDAO.findStationOrder(trainnumber, traindate, startlocation);
+        int startOrder = timeDAO.findStationOrder(trainnumber, startlocation);
         System.out.println("start"+"1111arrive");
-        int arriveOrder = timeDAO.findStationOrder(trainnumber, traindate, arrivelocation);
+        int arriveOrder = timeDAO.findStationOrder(trainnumber, arrivelocation);
         System.out.println("start"+startOrder+"arrive"+arriveOrder);
 
         //查询途中各站有无余票

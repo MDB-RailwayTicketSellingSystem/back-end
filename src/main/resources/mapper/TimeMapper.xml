@@ -14,12 +14,12 @@
   </resultMap>
   <!-- public List<Time> findTrain(Date date, String start, String arrive)-->
   <select id="findTrain" resultType="com.company.project.model.TrainResult" >
-        select a.TRAINNUMBER, a.STATIONORDER, a.STATION, a.TRAINDATE, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION from (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) a, (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{end} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
+        select a.TRAINNUMBER, a.STATIONORDER, a.STATION as startstation, b.station as arrivestation, a.TRAINDATE, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION , a.STATIONORDER as startorder, b.STATIONORDER as arriveorder from (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) a, (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{arrive} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
   </select>
 
   <!--BigDecimal findStationOrder(String trainnumber, Date traindate, String station)-->
   <select id="findStationOrder" resultType="int">
-        select STATIONORDER from (select * from Time t inner join Seatting s on (t.trainnumber=s.trainnumber and t.stationorder=s.stationorder)) where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATION = #{station}
+        select t.STATIONORDER from Time t where t.TRAINNUMBER = #{trainnumber} and t.STATION = #{station}
   </select>
 
   <!--void sell(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
