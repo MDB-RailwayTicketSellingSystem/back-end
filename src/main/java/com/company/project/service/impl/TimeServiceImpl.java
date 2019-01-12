@@ -5,6 +5,7 @@ import com.company.project.dao.TimeDAO;
 import com.company.project.model.Seatting;
 import com.company.project.model.Time;
 import com.company.project.model.TimeSeatting;
+import com.company.project.model.TrainResult;
 import com.company.project.service.TimeService;
 import com.company.project.core.AbstractService;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,9 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     查询列车
      */
     @Override
-    public List<Time> searchTrain(Date date, String start, String arrive){
+    public List<TrainResult> searchTrain(Date date, String start, String arrive){
 
-        List<Time> result = timeDAO.findTrain(date, start, arrive);
+        List<TrainResult> result = timeDAO.findTrain(date, start, arrive);
 
         return result;
     }

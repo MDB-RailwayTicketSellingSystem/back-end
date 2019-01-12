@@ -13,8 +13,7 @@
     <result column="DURATION" jdbcType="TIMESTAMP" property="duration" />
   </resultMap>
   <!-- public List<Time> findTrain(Date date, String start, String arrive)-->
-  <select id="findTrain" resultMap="BaseResultMap" >
-
+  <select id="findTrain" resultType="com.company.project.model.TrainResult" >
         select a.TRAINNUMBER, a.STATIONORDER, a.STATION, a.TRAINDATE, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION from (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) a, (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{end} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
   </select>
 

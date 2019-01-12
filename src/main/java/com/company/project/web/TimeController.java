@@ -1,8 +1,11 @@
 package com.company.project.web;
 import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
+import com.company.project.model.OrderResult;
 import com.company.project.model.Time;
+import com.company.project.model.TrainResult;
 import com.company.project.service.TimeService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -36,12 +39,20 @@ public class TimeController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器
     }
 
+    //@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @GetMapping("/findTrain")
-    public Result searchTrain(@RequestParam("date") Date date, @RequestParam("start") String start, @RequestParam("arrive")String arrive) {
+    public List<TrainResult> searchTrain(@RequestParam("date") Date date, @RequestParam("start") String start, @RequestParam("arrive")String arrive) {
 
+        List<TrainResult> trainResults=timeService.searchTrain(date, start, arrive);
+        for (TrainResult train:trainResults) {
 
+            train.traindateresult = train.formatter.format(train.traindate);
+            train.arrivetimeresult = train.formatter.format(train.arrivetime);
+            train.leavetimeresult = train.formatter.format(train.leavetime);
+            train.durationresult = train.formatter.format(train.duration);
+        }
 
-        return ResultGenerator.genSuccessResult(timeService.searchTrain(date, start, arrive));
+        return trainResults;
     }
 
     @PostMapping("/add")

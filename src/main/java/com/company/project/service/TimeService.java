@@ -1,6 +1,7 @@
 package com.company.project.service;
 import com.company.project.model.Time;
 import com.company.project.core.Service;
+import com.company.project.model.TrainResult;
 
 import java.math.BigDecimal;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface TimeService extends Service<Time> {
 
-    List<Time> searchTrain(Date date, String start, String arrive);
+    List<TrainResult> searchTrain(Date date, String start, String arrive);
     boolean isTicketLeft(String trainnumber, Date traindate, int stationorder);
 
 }
