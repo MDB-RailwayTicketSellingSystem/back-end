@@ -20,7 +20,7 @@ public class OrderTest {
 
     @Test
     public void test(){
-        LocalDate localDate=LocalDate.of(2018,12,20);
+        LocalDate localDate=LocalDate.of(2018,12,23);
         Trainorder trainorder=new Trainorder();
         trainorder.setOrdertime(localDate);
         trainorder.setState(new BigDecimal(0));
