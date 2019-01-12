@@ -2,6 +2,7 @@ package com.company.project.service.impl;
 
 import com.company.project.dao.TimeDAO;
 import com.company.project.dao.TrainorderDAO;
+import com.company.project.model.OrderResult;
 import com.company.project.model.Trainorder;
 import com.company.project.service.TrainorderService;
 import com.company.project.core.AbstractService;
@@ -31,10 +32,10 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
     查询历史订票
      */
     @Override
-    public List<Trainorder> findHistoryOrder(String accountid, Date start, Date end) {
+    public List<OrderResult> findHistoryOrder(String accountid, Date start, Date end) {
 
 
-        List<Trainorder> result = trainorderDAO.findOrder(accountid, start, end);
+        List<OrderResult> result = trainorderDAO.findOrder(accountid, start, end);
 
         return result;
     }

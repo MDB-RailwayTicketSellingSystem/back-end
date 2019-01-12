@@ -2,13 +2,16 @@ package com.company.project.web;
 import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
 import com.company.project.dao.TimeDAO;
+import com.company.project.model.OrderResult;
 import com.company.project.model.Passenger;
 import com.company.project.model.Trainorder;
 import com.company.project.service.PassengerService;
 import com.company.project.service.TimeService;
 import com.company.project.service.TrainorderService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +47,17 @@ public class TrainorderController {
     }
 
 
-    @GetMapping("/findHistoryOrder")
-    public List<Trainorder> findHistoryOrder(@RequestParam("accountid") String accountid, @RequestParam("start") Date start, @RequestParam("end") Date end) {
+    @PostMapping("/findHistoryOrder")
+    public List<OrderResult> findHistoryOrder(@RequestParam("accountid") String accountid, @RequestParam("start") Date start, @RequestParam("end") Date end) {
+        List<OrderResult> orderResults=trainorderService.findHistoryOrder(accountid,start , end);
+        //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        for (OrderResult order:orderResults) {
 
-        return trainorderService.findHistoryOrder(accountid,start , end);
+            order.traindateresult = order.formatter.format(order.traindate);
+            order.orderdateresult=  order.formatter.format(order.orderdate);
+        }
+
+        return orderResults;
     }
 
     @GetMapping("/createOrder")
