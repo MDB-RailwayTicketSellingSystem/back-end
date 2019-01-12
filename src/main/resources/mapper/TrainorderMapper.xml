@@ -23,8 +23,13 @@
   </select>
 
   <!-- public List<Trainorder> findOrder(String accountid, Date start, Date end)-->
-  <select id="findOrder" resultType="com.company.project.model.Trainorder">
-        select * from ( select * from Trainorder where ACCOUNTID = #{accountid} ) where TRAINDATE between #{start} and #{end}
+  <select id="findOrder"  resultType="com.company.project.model.Trainorder">
+        select o.ORDERID, o.NAME, o.PASSENGERCARD, o.TRAINDATE, o.TRAINNUMBER, t1.STATION, t2.STATION, o.PRICE, o.STATE, o.ORDERDATE
+        from ( Trainorder o JOIN Time t1
+              ON o.TRAINDATE = t1.TRAINDATE and o.TRAINNUMBER = t1.TRAINNUMBER and o.STARTORDER = t1.STATIONORDER )
+              JOIN Time t2
+              ON o.TRAINDATE = t2.TRAINDATE and o.TRAINNUMBER = t2.TRAINNUMBER and o.ARRIVEORDER = t2.STATIONORDER
+        where o.ACCOUNTID = #{accountid} and ( o.TRAINDATE between #{start} and #{end} )
   </select>
 
 </mapper>
