@@ -49,7 +49,7 @@ public class TimeController {
             train.traindateresult = train.formatter.format(train.traindate);
             train.arrivetimeresult = train.formatter.format(train.arrivetime);
             train.leavetimeresult = train.formatter.format(train.leavetime);
-            train.durationresult = train.formatter.format(train.duration);
+            //rain.durationresult = train.formatter.format(train.duration);
 
             train.price = 50 * (train.arriveorder - train.startorder);
 

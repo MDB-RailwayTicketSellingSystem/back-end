@@ -27,8 +27,8 @@ public class TrainResult {
 
     public int remainingseat;
 
-    public Date duration;
-    public String durationresult;
+    public int duration;
+    //public String durationresult;
 
     public int price;
 

@@ -10,7 +10,7 @@
     <result column="STATION" jdbcType="VARCHAR" property="station" />
     <result column="ARRIVETIME" jdbcType="TIMESTAMP" property="arrivetime" />
     <result column="LEAVETIME" jdbcType="TIMESTAMP" property="leavetime" />
-    <result column="DURATION" jdbcType="TIMESTAMP" property="duration" />
+    <result column="DURATION" jdbcType="NUMERIC" property="duration" />
   </resultMap>
   <!-- public List<Time> findTrain(Date date, String start, String arrive)-->
   <select id="findTrain" resultType="com.company.project.model.TrainResult" >
