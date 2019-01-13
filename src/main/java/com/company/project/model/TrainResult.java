@@ -29,7 +29,7 @@ public class TrainResult {
     public int remainingseatresult;
 
     public int duration;
-    //public String durationresult;
+    public int durationresult;
 
     public int price;
 

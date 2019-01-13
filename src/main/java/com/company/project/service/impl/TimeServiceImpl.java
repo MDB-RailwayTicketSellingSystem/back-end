@@ -28,6 +28,16 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     @Resource
     private TimeDAO timeDAO;
 
+    @Override
+    public int getDuration (String trainnumber, int startOrder, int arriveOrder){
+        int duration = 0;
+        for( int stationorder = startOrder+1; stationorder < arriveOrder; stationorder++ ){
+
+            duration = duration + timeDAO.findDuration(trainnumber, stationorder);
+        }
+        return duration;
+    }
+
     /*
     查询列车
      */

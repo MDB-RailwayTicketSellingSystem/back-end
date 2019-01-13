@@ -12,6 +12,8 @@ import com.company.project.core.Mapper;
 import com.company.project.model.Time;
 
 public interface TimeDAO extends Mapper<Time> {
+
+    int findDuration(@Param("trainnumber") String trainnumber, @Param("stationorder") int stationorder);
     List<TrainResult> findTrain(@Param("date") Date date, @Param("start") String start, @Param("arrive") String arrive);
     List<TrainResult> findTrainEasy(@Param("date") Date date, @Param("start") String start, @Param("arrive") String arrive);
     int findStationOrder(@Param("trainnumber") String trainnumber, @Param("station") String station);

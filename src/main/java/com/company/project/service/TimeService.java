@@ -16,6 +16,7 @@ public interface TimeService extends Service<Time> {
 
     List<TrainResult> searchTrain(Date date, String start, String arrive);
     List<TrainResult> searchTrainEasy(Date date, String start, String arrive);
+    int getDuration (String trainnumber, int startOrder, int arriveOrder);
     int isTicketLeft(String trainnumber, Date traindate, int stationorder);
 
 }
