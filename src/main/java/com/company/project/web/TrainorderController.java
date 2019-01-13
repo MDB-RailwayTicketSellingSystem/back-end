@@ -76,8 +76,8 @@ public class TrainorderController {
         //查询途中各站有无余票
         for( int stationOrder = startOrder; stationOrder < arriveOrder; stationOrder++ ){
 
-            boolean isLeft = timeService.isTicketLeft(trainnumber, traindate, stationOrder);
-            if(isLeft != true){
+            int isLeft = timeService.isTicketLeft(trainnumber, traindate, stationOrder);
+            if(isLeft <= 0){
                 return ResultGenerator.genFailResult("no tickets");
             }
         }

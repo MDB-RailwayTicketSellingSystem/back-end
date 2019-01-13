@@ -43,14 +43,9 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     查询剩余座位
      */
     @Override
-    public boolean isTicketLeft(String trainnumber, Date traindate, int stationorder){
+    public int isTicketLeft(String trainnumber, Date traindate, int stationorder){
         int num = timeDAO.findRemainSeat(trainnumber, traindate, stationorder);
-        if( num >= 1 ){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return num;
     }
 
 
