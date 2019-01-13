@@ -26,6 +26,7 @@ public class TrainResult {
     public String leavetimeresult;
 
     public int remainingseat;
+    public int remainingseatresult;
 
     public int duration;
     //public String durationresult;

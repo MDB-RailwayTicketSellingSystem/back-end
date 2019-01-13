@@ -53,6 +53,18 @@ public class TimeController {
 
             train.price = 50 * (train.arriveorder - train.startorder);
 
+            int remaining = 10000;
+
+            //查询途中各站余票数量 找出最小值作为剩余票数
+            for( int stationOrder = train.startorder; stationOrder < train.arriveorder; stationOrder++ ){
+
+                int isLeft = timeService.isTicketLeft(train.trainnumber, train.traindate, stationOrder);
+                if(isLeft <= remaining){
+                    remaining = isLeft;
+                }
+            }
+            train.remainingseatresult = remaining;
+
         }
 
         return trainResults;
