@@ -26,14 +26,14 @@
   <update id="sell" >
     update Seatting
     set REMAININGSEAT = REMAININGSEAT - #{num}
-    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<=]]> #{arriveOrder}
+    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<]]> #{arriveOrder}
   </update>
 
   <!--void back(String trainnumber, Date traindate, int startOrder, int arriveOrder, int num)-->
   <update id="back" >
     update Seatting
     set REMAININGSEAT = REMAININGSEAT + #{num}
-    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<=]]> #{arriveOrder}
+    where TRAINNUMBER = #{trainnumber} and TRAINDATE = #{traindate} and STATIONORDER <![CDATA[>=]]> #{startOrder} and STATIONORDER <![CDATA[<]]> #{arriveOrder}
   </update>
 
   <!--BigDecimal findRemainSeat(String trainnumber, Date traindate, int stationorder)-->
