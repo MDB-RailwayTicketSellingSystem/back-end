@@ -40,6 +40,17 @@ public class TimeServiceImpl extends AbstractService<Time> implements TimeServic
     }
 
     /*
+    用Timeseat表查询列车
+     */
+    @Override
+    public List<TrainResult> searchTrainEasy(Date date, String start, String arrive){
+
+        List<TrainResult> result = timeDAO.findTrainEasy(date, start, arrive);
+
+        return result;
+    }
+
+    /*
     查询剩余座位
      */
     @Override

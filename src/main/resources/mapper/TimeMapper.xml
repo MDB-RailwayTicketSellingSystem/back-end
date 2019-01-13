@@ -17,6 +17,13 @@
         select a.TRAINNUMBER, a.STATIONORDER, a.STATION as startstation, b.station as arrivestation, a.TRAINDATE, a.ARRIVETIME, a.LEAVETIME, a.REMAININGSEAT, a.DURATION , a.STATIONORDER as startorder, b.STATIONORDER as arriveorder from (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) a, (select s.trainnumber,s.stationorder,s.remainingseat,s.traindate,t.station,t.arrivetime,t.leavetime,t.duration  from seatting s join time t on (s.trainnumber=t.trainnumber and t.stationorder=s.stationorder) ) b where a.TRAINNUMBER = b.TRAINNUMBER and a.STATION = #{start} and b.STATION = #{arrive} and a.TRAINDATE = #{date} and b.TRAINDATE = #{date} and a.STATIONORDER &lt; b.STATIONORDER
   </select>
 
+  <!-- public List<Time> findTrainEasy(Date date, String start, String arrive)-->
+  <select id="findTrainEasy" resultType="com.company.project.model.TrainResult" >
+        select s.STARTORDER as startstation , s.ENDORDER as arrivestation, s.TRAINDATE, s.TRAINNUMBER, s.REMAININGSEAT, t1.ARRIVETIME, t1.LEAVETIME, t1.DURATION, t1.STATIONORDER as startorder, t2.STATIONORDER as arriveorder
+        from Timeseat s , Time t1, Time t2
+        where s.STARTORDER = #{start} and s.ENDORDER = #{arrive} and s.TRAINDATE = #{date} and t1.TRAINNUMBER = s.TRAINNUMBER and t1.STATION = #{start} and t2.TRAINNUMBER = s.TRAINNUMBER and t2.STATION = #{arrive}
+  </select>
+
   <!--BigDecimal findStationOrder(String trainnumber, Date traindate, String station)-->
   <select id="findStationOrder" resultType="int">
         select t.STATIONORDER from Time t where t.TRAINNUMBER = #{trainnumber} and t.STATION = #{station}

@@ -70,6 +70,24 @@ public class TimeController {
         return trainResults;
     }
 
+    @GetMapping("/findTrainEasy")
+    public List<TrainResult> searchTrainEasy(@RequestParam("date") Date date, @RequestParam("start") String start, @RequestParam("arrive")String arrive) {
+
+        List<TrainResult> trainResults=timeService.searchTrainEasy(date, start, arrive);
+        for (TrainResult train:trainResults) {
+
+            train.traindateresult = train.formatter.format(train.traindate);
+            train.arrivetimeresult = train.formatter.format(train.arrivetime);
+            train.leavetimeresult = train.formatter.format(train.leavetime);
+
+            train.price = 50 * (train.arriveorder - train.startorder);
+
+        }
+
+        return trainResults;
+    }
+
+
     @PostMapping("/add")
     public Result add(Time time) {
         timeService.save(time);
