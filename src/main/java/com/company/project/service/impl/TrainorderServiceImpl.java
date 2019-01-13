@@ -52,7 +52,7 @@ public class TrainorderServiceImpl extends AbstractService<Trainorder> implement
             order.setTraindate(traindate);
             order.setStartorder(startOrder);
             order.setArriveorder(arriveOrder);
-            order.setPrice(100);
+            order.setPrice( 50 * (arriveOrder - startOrder) );
             order.setState(0);
             order.setOrdertime(new Date());
             order.setName(name);
