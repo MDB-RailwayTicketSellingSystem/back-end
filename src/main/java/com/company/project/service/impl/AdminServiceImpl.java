@@ -31,7 +31,7 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
     {
         List<Map<String,Object>> list=new LinkedList<>();
         int between=(int) (end.getTime() - start.getTime())/ 1000 / 60 / 60 / 24;//相差天数
-        System.out.println("cccc" + between);
+      //  System.out.println("cccc" + between);
         for(int i=0;i<=between;i++){
             Map<String,Object> map=new HashMap<String, Object>();
             Calendar c = Calendar.getInstance();
@@ -40,15 +40,15 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
             c.set(Calendar.MINUTE,00);
             c.add(Calendar.DAY_OF_MONTH, i);
             Date current= c.getTime();
-            System.out.println("AAAAA" + current);
+           // System.out.println("AAAAA" + current);
             Trainorder trainorder=new Trainorder();
             trainorder.setState(0);
             SimpleDateFormat sdf0 =new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
             try {
                 String newda=sdf0.format(current);
-                System.out.println("aaa" +newda);
+                //System.out.println("aaa" +newda);
                 Date newnew=sdf0.parse(newda);
-                System.out.println("bbb" +newnew);
+              //  System.out.println("bbb" +newnew);
                 trainorder.setOrdertime(newnew);
 
             }catch (Exception e){
