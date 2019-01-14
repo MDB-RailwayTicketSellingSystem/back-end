@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 
+import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -29,21 +30,35 @@ public class AdminServiceImpl extends AbstractService<Trainorder> implements Adm
     public  List<Map<String,Object>> findbyTime(Date start, Date end, int status)
     {
         List<Map<String,Object>> list=new LinkedList<>();
-        int between=(int) (end.getTime() - start.getTime());//相差天数
-
-        for(int i=0;i<between;i++){
+        int between=(int) (end.getTime() - start.getTime())/ 1000 / 60 / 60 / 24;//相差天数
+        System.out.println("cccc" + between);
+        for(int i=0;i<=between;i++){
             Map<String,Object> map=new HashMap<String, Object>();
             Calendar c = Calendar.getInstance();
             c.setTime(start);
+            c.set(Calendar.HOUR_OF_DAY,0);
+            c.set(Calendar.MINUTE,00);
             c.add(Calendar.DAY_OF_MONTH, i);
             Date current= c.getTime();
+            System.out.println("AAAAA" + current);
             Trainorder trainorder=new Trainorder();
-            trainorder.setState(status);
-            trainorder.setOrdertime(current);
+            trainorder.setState(0);
+            SimpleDateFormat sdf0 =new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+            try {
+                String newda=sdf0.format(current);
+                System.out.println("aaa" +newda);
+                Date newnew=sdf0.parse(newda);
+                System.out.println("bbb" +newnew);
+                trainorder.setOrdertime(newnew);
+
+            }catch (Exception e){
+
+            }
             int j= trainorderDAO.getOrderByTimeSQL(trainorder);
-            map.put("date",current);
-            map.put("count",j);
-            list.add(map);
+            SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd" );
+                map.put("date", sdf.format(current));
+                map.put("count",j);
+                list.add(map);
 
         }
         return list;

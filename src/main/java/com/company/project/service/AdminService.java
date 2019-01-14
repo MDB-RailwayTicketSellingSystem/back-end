@@ -13,7 +13,6 @@ import java.util.Map;
 public interface AdminService extends Service<Trainorder> {
 
 
-
     List<Map<String,Object>> findbyTime(Date start, Date end, int status);
 
 }
